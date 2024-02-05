@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "wq9dgJ+p8VU+snm70bpO8FDnSdvDkceR9JSHfs1Dehoe9RfK22pS3xatqFS6MkLt5LukN5KFbTQOv6CxcIlE+Q==",
+  "success": true,
+  "projectFilePath": "/home/maxmulla/Desktop/IssueApp/IssueTracker/IssueTracker.csproj",
+  "expectedPackageFiles": [
+    "/home/maxmulla/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/home/maxmulla/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/home/maxmulla/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "/home/maxmulla/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "/home/maxmulla/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "/home/maxmulla/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.4.0/swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
