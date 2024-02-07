@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IssueTracker")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76b026d6decda3a25c1eafb473e9dda933c55b88")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c2d8a7c0a627a971ab2e62d0dbcff535adda67f9")]
 [assembly: System.Reflection.AssemblyProductAttribute("IssueTracker")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IssueTracker")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
