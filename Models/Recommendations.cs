@@ -10,7 +10,8 @@ public class Recommendation
     public string? Description { get; set; }
     public DateTime ReportedAt { get; set; }
     public Priority Priority { get; set; }
-   
+   public int UserId { get; set; }
+    public User User { get; set; } = null!;
     public Recommendation()
     {
         ReportedAt = DateTime.Now;

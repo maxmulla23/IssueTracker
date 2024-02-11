@@ -7,8 +7,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IssueTracker.Models
 {
-    public class AppUser : IdentityUser
+    public class User : IdentityUser
     {
-        
-    }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+
+        public ICollection<BugIssue> BugIssues { get; set; } = new List<BugIssue>();
+        public ICollection<Recommendation> Recommendations { get; set; } = new List<Recommendation> ();
+     }
 }
