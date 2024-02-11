@@ -11,6 +11,6 @@ public class Todo
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public Status Status { get; set; }
-    public virtual Developer? Developer { get; set; }
+    public Developer Developer { get; set; } = null!;
     
 }

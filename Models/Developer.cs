@@ -9,6 +9,6 @@ namespace IssueTracker.Models
         public string? FullName { get; set; }
         public string? Email { get; set; }
 
-        public ICollection<Todo> Todos { get; set; } = []; 
+        public List<Todo> Todos { get; } = [];
     }
 }

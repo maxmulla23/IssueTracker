@@ -11,7 +11,7 @@ public class BugIssue
     public DateTime ReportedAt { get; set; }
     public Priority Priority { get; set; } 
     
-
+    public Feedback? Feedback { get; set; }
     public BugIssue()
     {
         ReportedAt = DateTime.Now;
