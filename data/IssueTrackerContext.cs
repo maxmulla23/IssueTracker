@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using IssueTracker.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 
 namespace IssueTracker.Data
 {
-    public class IssueTrackerContext : DbContext
+    public class IssueTrackerContext : IdentityDbContext<User>
     {
         protected readonly IConfiguration Configuration;
         public IssueTrackerContext (IConfiguration configuration)
@@ -23,5 +24,6 @@ namespace IssueTracker.Data
         public DbSet<Recommendation> Recommendations { get; set; }
         public DbSet<Todo> Todos { get; set; }
         public DbSet<Developer> Developers { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
     }
 }
