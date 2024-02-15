@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using IssueTracker.Data;
+using IssueTracker.Models;
+using Microsoft.AspNetCore.Mvc;
+
+
+namespace IssueTracker.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TodoController : ControllerBase
+    {
+        private readonly IssueTrackerContext _context;
+
+        public TodoController(IssueTrackerContext context)
+        {
+            _context = context;
+        }
+
+        //create a new task
+        [HttpPost]
+        public async Task<ActionResult<Todo>>  PostTodo(Todo todo)
+        {
+            _context.Todos.Add(todo);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetTodo), new { id = todo.Id}, todo);
+        }
+
+        //Get all tasks
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Todo>>> GetTodo(Todo todo)
+        {
+            return await _context.Todos.ToListAsync();
+        }
+    }
+}
