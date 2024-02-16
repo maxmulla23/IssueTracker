@@ -52,5 +52,39 @@ namespace IssueTracker.Controllers
 
             return todo;
         }
+
+        //edit task
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutTodo(int id, Todo todo)
+        {
+            if(id != todo.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(todo).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!TodoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        private bool TodoExists(int id)
+        {
+            return _context.Todos.Any(e => e.Id == id);
+        }
     }
 }
