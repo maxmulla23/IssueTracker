@@ -13,10 +13,10 @@ namespace IssueTracker.Controllers
     public class UserController : ControllerBase
     {
         public readonly IssueTrackerContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
 
-        public UserController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IssueTrackerContext context)
+        public UserController(UserManager<User> userManager, SignInManager<User> signInManager, IssueTrackerContext context)
         {
             _context = context;
             _userManager = userManager;
@@ -32,6 +32,12 @@ namespace IssueTracker.Controllers
             {
                 return CreatedAtAction("GetUser", new { id = user.Id}, user);
             }
+            else 
+            {
+                return BadRequest(result.Errors);
+            }
         }
+
+        
     }
 }
