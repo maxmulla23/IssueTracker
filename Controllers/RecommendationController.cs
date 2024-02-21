@@ -76,6 +76,20 @@ namespace IssueTracker.Controllers
             return NoContent();
 
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRecommendation(int id)
+        {
+            var recommendation = await _context.Recommendations.FindAsync(id);
+            if (recommendation == null)
+            {
+                return NotFound();
+            }
+
+            _context.Recommendations.Remove(recommendation);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
         private bool RecommendationExists(int id)
         {
