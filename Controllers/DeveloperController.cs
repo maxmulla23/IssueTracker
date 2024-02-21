@@ -22,7 +22,7 @@ namespace IssueTracker.Controllers
             return await _context.Developers.ToListAsync();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")] // get by id
 
         public async Task<ActionResult<Developer>> GetDeveloper(int id)
         {
@@ -43,6 +43,39 @@ namespace IssueTracker.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetDeveloper), new { id = developer.Id }, developer);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutDeveloper(int id, Developer developer)
+        {
+            if (id != developer.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(developer).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if(!DeveloperExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return NoContent();
+        }
+
+        
+        private bool DeveloperExists(int id)
+        {
+            return _context.Developers.Any(e => e.Id == id);
         }
     }
 }
