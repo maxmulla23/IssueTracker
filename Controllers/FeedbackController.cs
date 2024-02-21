@@ -24,6 +24,7 @@ namespace IssueTracker.Controllers
         {
             return await _context.Feedbacks.ToListAsync();
         }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<Feedback>> GetFeedback(int id)
         {
@@ -35,5 +36,45 @@ namespace IssueTracker.Controllers
             }
             return feedback;
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Feedback>> PostFeedback(int id, Feedback feedback)
+        {
+            var bugIssue = await _context.BugIssues.FindAsync(id);
+            
+            if (bugIssue == null)
+            {
+                return NotFound();
+            }
+
+            _context.Feedbacks.Add(feedback);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetFeedback), new { id = feedback.Id},feedback);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> PutFeedback(int id, Feedback feedback)
+        {
+            if(id != feedback.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(feedback).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                
+                throw;
+            }
+
+            return NoContent();
+        }
+
+        
     }
 }
