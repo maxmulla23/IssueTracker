@@ -35,5 +35,14 @@ namespace IssueTracker.Controllers
 
             return developer;
         }
+
+        [HttpPost]
+        public async Task<ActionResult<Developer>> PostDeveloper(Developer developer)
+        {
+            _context.Developers.Add(developer);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetDeveloper), new { id = developer.Id }, developer);
+        }
     }
 }
