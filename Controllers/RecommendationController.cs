@@ -48,5 +48,38 @@ namespace IssueTracker.Controllers
 
             return recommendation;
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutRecommendation(int id, Recommendation recommendation)
+        {
+            if(id != recommendation.Id)
+            {
+                return BadRequest();
+            }
+            _context.Entry(recommendation).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if(!RecommendationExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                } 
+            }
+            return NoContent();
+
+        }
+
+        private bool RecommendationExists(int id)
+        {
+            return _context.Recommendations.Any(e => e.Id == id);
+        }
     }
 }
