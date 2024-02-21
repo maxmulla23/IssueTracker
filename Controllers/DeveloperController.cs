@@ -71,8 +71,21 @@ namespace IssueTracker.Controllers
             }
             return NoContent();
         }
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteDeveloper(int id)
+        {
+            var developer = await _context.Developers.FindAsync(id);
+            if (developer == null)
+            {
+                return NotFound();
+            }
+            _context.Developers.Remove(developer);
+            await _context.SaveChangesAsync();
 
-        
+            return NoContent();
+        }
+
+
         private bool DeveloperExists(int id)
         {
             return _context.Developers.Any(e => e.Id == id);
