@@ -7,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IssueTracker.Controllers
 {
+    [Route("api/controller")]
+    [ApiController]
     public class DeveloperController : ControllerBase
     {
         public readonly IssueTrackerContext _context;
