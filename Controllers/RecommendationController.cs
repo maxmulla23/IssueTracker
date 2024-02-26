@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IssueTracker.Controllers
 {
-    [Route("api/controller")]
+    [Route("api/[controller]")]
     [ApiController]
     public class RecommendationsController : ControllerBase
     {

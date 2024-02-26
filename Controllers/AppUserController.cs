@@ -5,6 +5,7 @@ using IssueTracker.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace IssueTracker.Controllers
 {
@@ -38,9 +39,12 @@ namespace IssueTracker.Controllers
                 return BadRequest(result.Errors);
             }
         }
+       
+            
+        
+
 
         [HttpGet]
-
         public async Task<ActionResult<IEnumerable<User>>> GetUser()
         {
             return await _context.Users.ToListAsync();
