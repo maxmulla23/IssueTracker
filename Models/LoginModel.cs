@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using IssueTracker.Data;
+
 
 namespace IssueTracker.Models
 {
