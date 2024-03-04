@@ -38,10 +38,13 @@ namespace IssueTracker.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
-            var userExists = await _userManager.FindByEmailAsync(model.Email);
+            try
+            {
+                var userExists = await _userManager.FindByEmailAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Email already exists!"});
 
+            
              User user = new User()
             {
                 Email = model.Email,
@@ -49,13 +52,20 @@ namespace IssueTracker.Controllers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
-                UserType = model.UserType
+                UserType = model.userType
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+            
+                    throw;
+                
+            }
             
         }
 

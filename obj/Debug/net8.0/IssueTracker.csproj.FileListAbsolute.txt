@@ -257,3 +257,4 @@
 /home/maxmulla/Desktop/IssueApp/IssueTracker/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Security.Cryptography.ProtectedData.dll
 /home/maxmulla/Desktop/IssueApp/IssueTracker/bin/Debug/net8.0/runtimes/win/lib/net7.0/System.Windows.Extensions.dll
 /home/maxmulla/Desktop/IssueApp/IssueTracker/obj/Debug/net8.0/IssueTra.9E39DF0D.Up2Date
+/home/maxmulla/Desktop/IssueApp/IssueTracker/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
