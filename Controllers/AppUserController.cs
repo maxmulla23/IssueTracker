@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.RegularExpressions;
 using IssueTracker.Data;
 using IssueTracker.Models;
 using Microsoft.AspNetCore.Identity;
@@ -40,23 +41,26 @@ namespace IssueTracker.Controllers
         {
             try
             {
-                var userExists = await _userManager.FindByEmailAsync(model.Email);
+                var userExists = await _userManager.FindByIdAsync(model.Email);
             if (userExists != null)
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Email already exists!"});
 
-            
+           ;
              User user = new User()
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                FirstName = model.FirstName,
-                LastName = model.LastName,
+                UserName = model.UserName,
                 PhoneNumber = model.PhoneNumber,
-                UserType = model.userType
+                UserType = model.UserType
             };
+            user.Email = user.UserName;
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            {
+                var errors = result.Errors.Select(e => e.Description);
+                return BadRequest(new Response { Status = "Error", Message = string.Join(",", errors) });
+            }
 
             return Ok(new Response { Status = "Success", Message = "User created successfully!" });
             }
@@ -119,10 +123,9 @@ namespace IssueTracker.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                FirstName = model.FirstName,
-                LastName = model.LastName,
+                UserName = model.UserName,
                 PhoneNumber = model.PhoneNumber,
-                UserType = model.UserType
+            
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
