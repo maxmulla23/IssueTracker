@@ -52,9 +52,10 @@ namespace IssueTracker.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName,
                 PhoneNumber = model.PhoneNumber,
-                UserType = model.UserType
+                UserType = model.UserType 
+                
             };
-            user.Email = user.UserName;
+           
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
@@ -72,7 +73,7 @@ namespace IssueTracker.Controllers
             }
             
         }
-        //find errors in code below?
+        
 
         [HttpPost]
         [Route("login")]

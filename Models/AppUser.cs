@@ -15,5 +15,10 @@ namespace IssueTracker.Models
         public UserType UserType { get; set; }
         public ICollection<BugIssue> BugIssues { get; set; } = new List<BugIssue>();
         public ICollection<Recommendation> Recommendations { get; set; } = new List<Recommendation> ();
-     }
+
+        public static implicit operator User(User v)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
