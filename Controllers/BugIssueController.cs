@@ -76,8 +76,13 @@ namespace IssueTracker.Controllers
         // POST: api/BugIssue
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<BugIssue>> PostBugIssue(BugIssue bugIssue)
+        public async Task<IActionResult> PostBugIssue([FromBody] BugIssue model)
         {
+            BugIssue bugIssue = new BugIssue()
+            {
+                Description = model.Description,
+                Priority = model.Priority
+            };
             _context.BugIssues.Add(bugIssue);
             await _context.SaveChangesAsync();
 
