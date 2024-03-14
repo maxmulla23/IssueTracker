@@ -40,7 +40,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAlloweSpecificOrigins,
                     policy =>
                     {
-                        policy.WithOrigins("http://example.com");
+                        policy.WithOrigins("http://localhost:3000");
                     });
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -60,7 +60,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseCors();
+app.UseCors(MyAlloweSpecificOrigins);
 
 app.UseAuthorization();
 
