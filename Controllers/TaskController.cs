@@ -24,7 +24,7 @@ namespace IssueTracker.Controllers
 
         //create a new task
         [HttpPost]
-        public async Task<ActionResult<Todo>>  PostTodo(Todo todo)
+        public async Task<ActionResult<Todo>> PostTodo(Todo todo)
         {
             _context.Todos.Add(todo);
             await _context.SaveChangesAsync();
@@ -34,7 +34,7 @@ namespace IssueTracker.Controllers
 
         //Get all tasks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Todo>>> GetTodo(Todo todo)
+        public async Task<ActionResult<IEnumerable<Todo>>> GetTodo()
         {
             return await _context.Todos.ToListAsync();
         }
