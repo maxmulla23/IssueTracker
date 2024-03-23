@@ -13,8 +13,8 @@ namespace IssueTracker.Models
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public UserType UserType { get; set; }
-        public ICollection<BugIssue> BugIssues { get; set; } = new List<BugIssue>();
-        public ICollection<Recommendation> Recommendations { get; set; } = new List<Recommendation> ();
+        public ICollection<BugIssue> BugIssues { get; } = new List<BugIssue>();
+        public ICollection<Recommendation> Recommendations { get;} = new List<Recommendation>();
 
         
     }

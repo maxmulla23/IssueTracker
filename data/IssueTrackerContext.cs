@@ -25,5 +25,21 @@ namespace IssueTracker.Data
         public DbSet<Todo> Todos { get; set; }
         public DbSet<Developer> Developers { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelbuilder)
+        {
+            base.OnModelCreating(modelbuilder);
+
+            modelbuilder.Entity<User>()
+            .HasMany(e => e.BugIssues)
+            .WithOne(e => e.User)
+            .HasForeignKey(e => e.UserId);
+            
+            modelbuilder.Entity<User>()
+            .HasMany(e => e.Recommendations)
+            .WithOne(e => e.User)
+            .HasForeignKey(e => e.UserId);
+
+        }
     }
 }

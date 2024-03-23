@@ -8,7 +8,7 @@ namespace IssueTracker.Models
         public int Id { get; set; }
         public string? Description { get; set; }
        public int BugIssueId { get; set; }
-       public BugIssue BugIssue {get; set;} = null!;
+       public virtual BugIssue BugIssue {get; set;} = null!;
     
     }
 }
