@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using IssueTracker.Data;
 
 namespace IssueTracker.Models;
@@ -11,6 +12,8 @@ public class Todo
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public Status Status { get; set; }
+    public int DeveloperId { get; set; }
+    [ForeignKey("DeveloperId")]
     public virtual Developer? Developer { get; set; }
     
 }
