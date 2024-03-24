@@ -4,6 +4,7 @@ using IssueTracker.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IssueTracker.Migrations
 {
     [DbContext(typeof(IssueTrackerContext))]
-    partial class IssueTrackerContextModelSnapshot : ModelSnapshot
+    [Migration("20240324060249_del")]
+    partial class del
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +42,13 @@ namespace IssueTracker.Migrations
                     b.Property<DateTime>("ReportedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("BugIssues");
                 });
@@ -104,7 +113,12 @@ namespace IssueTracker.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Recommendations");
                 });
@@ -346,6 +360,17 @@ namespace IssueTracker.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("IssueTracker.Models.BugIssue", b =>
+                {
+                    b.HasOne("IssueTracker.Models.User", "User")
+                        .WithMany("BugIssues")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("IssueTracker.Models.Feedback", b =>
                 {
                     b.HasOne("IssueTracker.Models.BugIssue", "BugIssue")
@@ -355,6 +380,15 @@ namespace IssueTracker.Migrations
                         .IsRequired();
 
                     b.Navigation("BugIssue");
+                });
+
+            modelBuilder.Entity("IssueTracker.Models.Recommendation", b =>
+                {
+                    b.HasOne("IssueTracker.Models.User", "User")
+                        .WithMany("Recommendations")
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("IssueTracker.Models.Todo", b =>
@@ -422,6 +456,13 @@ namespace IssueTracker.Migrations
             modelBuilder.Entity("IssueTracker.Models.Developer", b =>
                 {
                     b.Navigation("Todos");
+                });
+
+            modelBuilder.Entity("IssueTracker.Models.User", b =>
+                {
+                    b.Navigation("BugIssues");
+
+                    b.Navigation("Recommendations");
                 });
 #pragma warning restore 612, 618
         }

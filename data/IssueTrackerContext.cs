@@ -30,26 +30,11 @@ namespace IssueTracker.Data
         {
             
             base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<BugIssue>()
-            .HasKey(e => e.Id);
-
-
-            modelBuilder.Entity<BugIssue>()
-            .HasOne(e => e.User)
-            .WithMany(e => e.BugIssues)
-            .HasForeignKey(e => e.UserId)
-            .IsRequired(); 
-            
-            modelBuilder.Entity<User>()
-            .HasMany(e => e.Recommendations)
-            .WithOne(e => e.User)
-            .HasForeignKey(e => e.UserId);
-
             modelBuilder.Entity<Todo>()
             .HasOne(e => e.Developer)
             .WithMany(e => e.Todos)
-            .HasForeignKey(e => e.DeveloperId);
+            .HasForeignKey(e => e.DeveloperId)
+            .IsRequired();
 
         }
     }

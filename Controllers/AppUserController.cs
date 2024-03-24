@@ -48,6 +48,7 @@ namespace IssueTracker.Controllers
            ;
              User user = new User()
             {
+                
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName,
@@ -80,19 +81,78 @@ namespace IssueTracker.Controllers
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            var result = await _signInManager.PasswordSignInAsync(user, model.Password,true, lockoutOnFailure: true);
-            if(result.Succeeded)
-            {
-                return Ok("User logged in successfully");
-            }
-            else
-            {
-                return BadRequest("Invalid login attempt.");
-            }
+    if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+    {
+        var userRoles = await _userManager.GetRolesAsync(user);
+        var authClaims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        };
+
+        foreach (var userRole in userRoles)
+        {
+            authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+        }
+
+        var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+        var token = new JwtSecurityToken(
+            issuer: _configuration["JWT:ValidIssuer"],
+            audience: _configuration["JWT:ValidAudience"],
+            expires: DateTime.Now.AddHours(3),
+            claims: authClaims,
+            signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+        );
+
+        return Ok(new
+        {
+            token = new JwtSecurityTokenHandler().WriteToken(token),
+            expiration = token.ValidTo,
+            id = user.Id,
+            email = user.Email,
+            username = user.UserName,
+            role = userRoles // Include all roles of the user
+        });
+    }
+    return Unauthorized();
+        //     var user = await _userManager.FindByEmailAsync(model.Email);
+        //     if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+        //     {
+        //         var userRoles = await _userManager.GetRolesAsync(user);
+        //         var authClaims = new List<Claim>
+        //         {
+        //             new Claim(ClaimTypes.Name, user.UserName),
+        //             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        //         };
+
+        //         foreach (var userRole in userRoles)
+        //         {
+        //             authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+        //         }
+
+        //         var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+        //         var token = new JwtSecurityToken(
+        //             issuer: _configuration["JWT:ValidIssuer"],
+        //             audience: _configuration["JWT:ValidAudience"],
+        //             expires: DateTime.Now.AddHours(3),
+        //             claims: authClaims,
+        //             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+        //             );
+
+        //         return Ok(new
+        //         {
+        //             token = new JwtSecurityTokenHandler().WriteToken(token),
+        //             expiration = token.ValidTo,
+        //             id = user.Id,
+        //             email = user.Email,
+        //             username = user.UserName,
+                   
+                    
+        //         });
+        //     }
+        //    return Unauthorized();
             
            
         }
