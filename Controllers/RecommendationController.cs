@@ -29,10 +29,19 @@ namespace IssueTracker.Controllers
         [HttpPost]
         public async Task<ActionResult<Recommendation>> PostRecommendation(Recommendation recommendation)
         {
-            _context.Recommendations.Add(recommendation);
+            try
+            {
+              _context.Recommendations.Add(recommendation);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetRecommendation), new { id = recommendation.Id}, recommendation);
+            return CreatedAtAction(nameof(GetRecommendation), new { id = recommendation.Id}, recommendation);  
+            }
+            catch (System.Exception)
+            {
+                
+                throw;
+            }
+            
         }
 
         [HttpGet("{id}")]
